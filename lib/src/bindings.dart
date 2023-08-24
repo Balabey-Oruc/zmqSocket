@@ -5,6 +5,7 @@ import 'dart:ffi';
 import 'dart:io';
 
 import 'package:ffi/ffi.dart';
+import 'package:path/path.dart' as path;
 
 typedef ZMQContext = Pointer<Void>;
 typedef ZMQMessage = Pointer<Void>;
@@ -164,9 +165,16 @@ class ZMQBindings {
     _initLibrary();
     _lookupFunctions();
   }
+  static String getAppPath() {
+    if (Platform.isWindows) {
+      return Directory(path.dirname(Platform.resolvedExecutable)).path;
+    }
+    return Directory.current.path;
+  }
 
   String _platformPath(final String name, {String? path}) {
-    path = path ?? '';
+    path = path ?? getAppPath();
+    log('path => $path');
     if (Platform.isLinux || Platform.isAndroid) {
       return path + 'lib' + name + '.so';
     }
