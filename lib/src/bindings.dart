@@ -166,14 +166,17 @@ class ZMQBindings {
     _lookupFunctions();
   }
   static String getAppPath() {
+    late final newPath;
     if (Platform.isWindows) {
-      return Directory(path.dirname(Platform.resolvedExecutable)).path;
+      newPath = Directory(path.dirname(Platform.resolvedExecutable)).path;
+      return '$newPath\\';
     }
-    return Directory.current.path;
+    newPath = Directory.current.path;
+    return '$newPath\\';
   }
 
   String _platformPath(final String name, {String? path}) {
-    path = path ?? '$getAppPath()\\';
+    path = path ?? getAppPath();
     log('path => $path');
     if (Platform.isLinux || Platform.isAndroid) {
       return path + 'lib' + name + '.so';
