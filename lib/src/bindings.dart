@@ -173,7 +173,7 @@ class ZMQBindings {
   }
 
   String _platformPath(final String name, {String? path}) {
-    path = path ?? getAppPath();
+    path = path ?? '$getAppPath()\\';
     log('path => $path');
     if (Platform.isLinux || Platform.isAndroid) {
       return path + 'lib' + name + '.so';
