@@ -176,7 +176,7 @@ class ZMQBindings {
   }
 
   String _platformPath(final String name, {String? path}) {
-    path = path ?? getAppPath();
+    path ??= getAppPath();
     log('path => $path');
     if (Platform.isLinux || Platform.isAndroid) {
       return path + 'lib' + name + '.so';
@@ -197,6 +197,7 @@ class ZMQBindings {
     }
 
     final String fullPath = _platformPath(name, path: path);
+    log('fullPath => $fullPath');
     return DynamicLibrary.open(fullPath);
   }
 
